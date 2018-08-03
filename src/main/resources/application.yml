@@ -1,0 +1,37 @@
+# Spring
+spring:
+
+ # Datasource
+ datasource:
+  url: jdbc:postgresql://192.168.99.100:5432/appointment
+  username: postgres
+  password:
+  driver-class-name: org.postgresql.Driver
+
+ # Data
+ data:
+  jpa:
+    repositories:
+      enabled: true
+
+
+ jpa:
+   database: postgresql
+   hibernate:
+     ddl-auto: update
+   show-sql: true
+   properties:
+    hibernate:
+      jdbc:
+        lob:
+          non_contextual_creation: true
+
+# Server
+server:
+  port: 8024
+
+# Jwt
+jwt:
+  secretKey: secret
+  expiration: 30
+

@@ -1,0 +1,46 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.appointment.api'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    runtime('org.postgresql:postgresql:9.4.1212')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile("io.jsonwebtoken:jjwt:0.9.0")
+    compile('org.apache.commons:commons-lang3:3.5')
+    compile('com.google.code.gson:gson:2.8.2')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile "org.codehaus.groovy:groovy-all"
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-4"
+    testCompile "org.spockframework:spock-spring:1.1-groovy-2.4-rc-4"
+    testCompile "cglib:cglib-nodep:2.2"       // For mocking classes
+    testCompile "org.objenesis:objenesis:2.6" // For mocking final classes
+    testCompile "com.h2database:h2:1.4.196"
+}

@@ -10,10 +10,13 @@ public class LoginResponse extends BaseResponse {
 
     private Integer expireTime;
 
+    private String[] roles;
 
-    public LoginResponse(ResponseCode responseCode, String token, Integer expireTime) {
+
+    public LoginResponse(ResponseCode responseCode, String token, Integer expireTime, String[] roles) {
         super(responseCode);
         this.token = token;
         this.expireTime = expireTime;
+        this.roles = roles;
     }
 }

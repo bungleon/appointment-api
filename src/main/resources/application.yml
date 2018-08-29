@@ -33,5 +33,9 @@ server:
 # Jwt
 jwt:
   secretKey: secret
-  expiration: 30
+  expiration: 32
+
+# Cors for admin ui
+admin-ui-url: http://localhost:4200
+
 

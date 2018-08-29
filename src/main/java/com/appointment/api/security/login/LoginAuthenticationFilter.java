@@ -52,7 +52,7 @@ public class LoginAuthenticationFilter extends AbstractSystemAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         AuthenticatedUserToken user = (AuthenticatedUserToken) authResult;
-        LoginResponse loginResponse = new LoginResponse(ResponseCode.SUCCESS, user.getToken(), jwtConfig.getExpiration());
+        LoginResponse loginResponse = new LoginResponse(ResponseCode.SUCCESS, user.getToken(), jwtConfig.getExpiration(), getRoles(user.getUser().getRole()));
         flushResponse(response, loginResponse);
     }
 
@@ -60,5 +60,9 @@ public class LoginAuthenticationFilter extends AbstractSystemAuthenticationFilte
     boolean isValidRequest(LoginRequest request) {
         Set<ConstraintViolation<LoginRequest>> validate = validatorFactory.getValidator().validate(request);
         return validate.size() == 0;
+    }
+
+    private String[] getRoles(String role) {
+        return role.split(",");
     }
 }

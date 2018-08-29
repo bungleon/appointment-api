@@ -2,18 +2,9 @@ package com.appointment.api.controller;
 
 import com.appointment.api.component.AuthUser;
 import com.appointment.api.domain.user.User;
-import com.appointment.api.handler.user.UserCreateHandler;
-import com.appointment.api.handler.user.UserDetailHandler;
-import com.appointment.api.handler.user.UserListHandler;
-import com.appointment.api.handler.user.UserUpdateHandler;
-import com.appointment.api.message.request.user.UserCreateRequest;
-import com.appointment.api.message.request.user.UserDetailRequest;
-import com.appointment.api.message.request.user.UserListRequest;
-import com.appointment.api.message.request.user.UserUpdateRequest;
-import com.appointment.api.message.response.user.UserCreateResponse;
-import com.appointment.api.message.response.user.UserDetailResponse;
-import com.appointment.api.message.response.user.UserListResponse;
-import com.appointment.api.message.response.user.UserUpdateResponse;
+import com.appointment.api.handler.user.*;
+import com.appointment.api.message.request.user.*;
+import com.appointment.api.message.response.user.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +17,15 @@ public class UserController {
     private final UserUpdateHandler userUpdateHandler;
     private final UserListHandler userListHandler;
     private final UserDetailHandler userDetailHandler;
+    private final UserDeleteHandler userDeleteHandler;
     private final AuthUser authUser;
 
-    public UserController(UserCreateHandler userCreateHandler, UserUpdateHandler userUpdateHandler, UserListHandler userListHandler, UserDetailHandler userDetailHandler, AuthUser authUser) {
+    public UserController(UserCreateHandler userCreateHandler, UserUpdateHandler userUpdateHandler, UserListHandler userListHandler, UserDetailHandler userDetailHandler, UserDeleteHandler userDeleteHandler, AuthUser authUser) {
         this.userCreateHandler = userCreateHandler;
         this.userUpdateHandler = userUpdateHandler;
         this.userListHandler = userListHandler;
         this.userDetailHandler = userDetailHandler;
+        this.userDeleteHandler = userDeleteHandler;
         this.authUser = authUser;
     }
 
@@ -54,6 +47,11 @@ public class UserController {
     @PostMapping("/detail")
     public UserDetailResponse userDetail(@RequestBody UserDetailRequest request) {
         return userDetailHandler.execute(request);
+    }
+
+    @PostMapping("/delete")
+    public UserDeleteResponse userDelete(@RequestBody UserDeleteRequest request) {
+        return userDeleteHandler.execute(request);
     }
 
     @PostMapping("/token")

@@ -16,15 +16,17 @@ public class MerchantController {
     private final MerchantListHandler merchantListHandler;
     private final MerchantDetailHandler merchantDetailHandler;
     private final SetMerchantHoliday setMerchantHoliday;
+    private final MerchantDeleteHandler merchantDeleteHandler;
 
     public MerchantController(MerchantCreateHandler merchantCreateHandler, MerchantUpdateHandler merchantUpdateHandler,
                               MerchantListHandler merchantListHandler, MerchantDetailHandler merchantDetailHandler,
-                              SetMerchantHoliday setMerchantHoliday) {
+                              SetMerchantHoliday setMerchantHoliday, MerchantDeleteHandler merchantDeleteHandler) {
         this.merchantCreateHandler = merchantCreateHandler;
         this.merchantUpdateHandler = merchantUpdateHandler;
         this.merchantListHandler = merchantListHandler;
         this.merchantDetailHandler = merchantDetailHandler;
         this.setMerchantHoliday = setMerchantHoliday;
+        this.merchantDeleteHandler = merchantDeleteHandler;
     }
 
     @PostMapping("/create")
@@ -45,6 +47,11 @@ public class MerchantController {
     @PostMapping("/detail")
     public MerchantDetailResponse detail(@RequestBody MerchantDetailRequest request) {
         return merchantDetailHandler.execute(request);
+    }
+
+    @PostMapping("/delete")
+    public MerchantDeleteResponse delete(@RequestBody MerchantDeleteRequest request) {
+        return merchantDeleteHandler.execute(request);
     }
 
     @PostMapping("/set-holiday")

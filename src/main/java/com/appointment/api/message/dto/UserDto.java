@@ -16,6 +16,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private boolean enabled;
+    private UUID whoCreatedId;
     private LocalDateTime created;
     private LocalDateTime updated;
 
@@ -28,5 +29,6 @@ public class UserDto {
         this.enabled = user.isEnabled();
         this.created = user.getCreateDate();
         this.updated = user.getUpdateDate();
+        this.whoCreatedId = user.getCreatedUserId();
     }
 }

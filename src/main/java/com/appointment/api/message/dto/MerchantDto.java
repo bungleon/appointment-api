@@ -1,12 +1,10 @@
 package com.appointment.api.message.dto;
 
-import com.appointment.api.domain.merchant.Holiday;
 import com.appointment.api.domain.merchant.Merchant;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,6 +16,8 @@ public class MerchantDto {
     private String secretKey;
     private Integer workingRange;
     private Boolean enabled;
+    private UUID whoCreatedId;
+    private String whoCreated;
     private LocalDateTime created;
     private LocalDateTime updated;
 
@@ -30,5 +30,7 @@ public class MerchantDto {
         this.enabled = merchant.isEnabled();
         this.created = merchant.getCreateDate();
         this.updated = merchant.getUpdateDate();
+        this.whoCreatedId = merchant.getUser().getId();
+        this.whoCreated = String.format("%s %s", merchant.getUser().getFirstName(), merchant.getUser().getLastName());
     }
 }

@@ -28,13 +28,21 @@ public class Helper {
     }
 
     public static LocalDateTime getLocalDateTime(String time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
         return LocalDateTime.parse(time, formatter);
     }
 
     public static LocalDateTime getToday(String date) {
         // Date format must be yyyy-MM-dd
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
         return LocalDateTime.parse(String.format("%s %s", date, "00:00"), formatter);
     }
+
+    /*public static String fixHour(String hour){
+        String[] parsed=hour.split(":");
+        if(parsed.length!=2){
+            //
+        }
+        if(parsed[0].length())
+    }*/
 }

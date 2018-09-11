@@ -45,16 +45,14 @@ public class WorkingHourUpdateHandler implements Handler<WorkingHourUpdateReques
         }
 
         try {
-            if (TimePeriod.AM.equals(request.getTimePeriod())) {
-                WorkingHour otherWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.PM, merchant.getId(), today);
-                if (otherWorkingHour.getStartTime().isBefore(finishTime)) {
-                    throw new TimeException();
-                }
-            } else {
-                WorkingHour otherWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.AM, merchant.getId(), today);
-                if (otherWorkingHour.getFinishTime().isAfter(startTime)) {
-                    throw new TimeException();
-                }
+            if (TimePeriod.NIGHT.equals(request.getTimePeriod())) {
+                // 00 - 06
+            } else if (TimePeriod.MORNING.equals(request.getTimePeriod())) {
+                // 06 - 12
+            } else if (TimePeriod.AFTERNOON.equals(request.getTimePeriod())) {
+                // 12 - 18
+            } else if (TimePeriod.EVENING.equals(request.getTimePeriod())) {
+                // 18 - 00
             }
         } catch (WorkingHourNotFoundException e) {
             //

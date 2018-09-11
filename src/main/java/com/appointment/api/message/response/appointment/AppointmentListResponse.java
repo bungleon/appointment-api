@@ -15,16 +15,23 @@ public class AppointmentListResponse extends BaseResponse {
 
     private String merchantName;
     private String apiKey;
-    private List<AppointmentDto> amAppointments;
-    private List<AppointmentDto> pmAppointments;
+    private List<AppointmentDto> nightAppointments;
+    private List<AppointmentDto> morningAppointments;
+    private List<AppointmentDto> afternoonAppointments;
+    private List<AppointmentDto> eveningAppointments;
 
     @Builder
-    public AppointmentListResponse(ResponseCode responseCode, List<AppointmentDto> amAppointments,
-                                   List<AppointmentDto> pmAppointments, String merchantName, String apiKey) {
+
+    public AppointmentListResponse(ResponseCode responseCode, String merchantName, String apiKey,
+                                   List<AppointmentDto> nightAppointments, List<AppointmentDto> morningAppointments,
+                                   List<AppointmentDto> afternoonAppointments,
+                                   List<AppointmentDto> eveningAppointments) {
         super(responseCode);
-        this.amAppointments = amAppointments;
-        this.pmAppointments = pmAppointments;
         this.merchantName = merchantName;
         this.apiKey = apiKey;
+        this.nightAppointments = nightAppointments;
+        this.morningAppointments = morningAppointments;
+        this.afternoonAppointments = afternoonAppointments;
+        this.eveningAppointments = eveningAppointments;
     }
 }

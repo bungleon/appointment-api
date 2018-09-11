@@ -37,41 +37,69 @@ public class AppointmentListHandler implements Handler<AppointmentListRequest, A
 
         Merchant merchant = merchantService.getByApiKey(request.getApiKey());
 
-        WorkingHour amWorkingHour = null;
-        WorkingHour pmWorkingHour = null;
+        WorkingHour nightWorkingHour = null;
+        WorkingHour morningWorkingHour = null;
+        WorkingHour afternoonWorkingHour = null;
+        WorkingHour eveningWorkingHour = null;
 
         try {
-            amWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.AM, merchant.getId(),
+            nightWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.NIGHT, merchant.getId(),
                     Helper.getToday(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }
 
         try {
-            pmWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.PM, merchant.getId(),
+            morningWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.MORNING, merchant.getId(),
                     Helper.getToday(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }
 
-        List<Appointment> amAppointments = null;
-        List<Appointment> pmAppointments = null;
-
-        if (amWorkingHour != null) {
-            amAppointments = appointmentService.getByWorkingHours(amWorkingHour.getId());
+        try {
+            afternoonWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.AFTERNOON, merchant.getId(),
+                    Helper.getToday(request.getDate()));
+        } catch (WorkingHourNotFoundException e) {
+            //
         }
-        if (pmWorkingHour != null) {
-            pmAppointments = appointmentService.getByWorkingHours(pmWorkingHour.getId());
+
+        try {
+            eveningWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.EVENING, merchant.getId(),
+                    Helper.getToday(request.getDate()));
+        } catch (WorkingHourNotFoundException e) {
+            //
+        }
+
+        List<Appointment> nightAppointments = null;
+        List<Appointment> morningAppointments = null;
+        List<Appointment> afternoonAppointments = null;
+        List<Appointment> eveningAppointments = null;
+
+        if (nightWorkingHour != null) {
+            nightAppointments = appointmentService.getByWorkingHours(nightWorkingHour.getId());
+        }
+        if (morningWorkingHour != null) {
+            morningAppointments = appointmentService.getByWorkingHours(morningWorkingHour.getId());
+        }
+        if (afternoonWorkingHour != null) {
+            afternoonAppointments = appointmentService.getByWorkingHours(afternoonWorkingHour.getId());
+        }
+        if (eveningWorkingHour != null) {
+            eveningAppointments = appointmentService.getByWorkingHours(eveningWorkingHour.getId());
         }
 
         return AppointmentListResponse.builder()
                 .responseCode(ResponseCode.SUCCESS)
                 .merchantName(merchant.getName())
                 .apiKey(merchant.getApiKey())
-                .amAppointments(CollectionUtils.isEmpty(amAppointments) ? null :
-                        amAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
-                .pmAppointments(CollectionUtils.isEmpty(pmAppointments) ? null :
-                        pmAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
+                .nightAppointments(CollectionUtils.isEmpty(nightAppointments) ? null :
+                        nightAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
+                .morningAppointments(CollectionUtils.isEmpty(morningAppointments) ? null :
+                        morningAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
+                .afternoonAppointments(CollectionUtils.isEmpty(afternoonAppointments) ? null :
+                        afternoonAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
+                .eveningAppointments(CollectionUtils.isEmpty(eveningAppointments) ? null :
+                        eveningAppointments.stream().map(AppointmentDto::new).collect(Collectors.toList()))
 
                 .build();
     }

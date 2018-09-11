@@ -5,9 +5,11 @@ import com.appointment.api.domain.workinghour.WorkingHourRepository;
 import com.appointment.api.exception.domain_exception.WorkingHourNotFoundException;
 import com.appointment.api.exception.domain_exception.WorkingHourNotSavedException;
 import com.appointment.api.message.TimePeriod;
+import com.appointment.api.message.request.workinghour.WorkingHourListRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,5 +31,10 @@ public class WorkingHourServiceImpl implements WorkingHourService {
     public WorkingHour getWorkingHourForSave(TimePeriod timePeriod, UUID merchantId, LocalDateTime today) {
         return Optional.ofNullable(workingHourRepository.findByTimePeriodAndMerchantIdAndToday(timePeriod, merchantId, today))
                 .orElseThrow(WorkingHourNotFoundException::new);
+    }
+
+    @Override
+    public List<WorkingHour> search(WorkingHourListRequest request) {
+        return workingHourRepository.findAll(new WorkingHourSpecs(request));
     }
 }

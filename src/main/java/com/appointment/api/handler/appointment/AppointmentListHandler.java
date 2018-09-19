@@ -44,28 +44,28 @@ public class AppointmentListHandler implements Handler<AppointmentListRequest, A
 
         try {
             nightWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.NIGHT, merchant.getId(),
-                    Helper.getToday(request.getDate()));
+                    Helper.getLocalDateTime(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }
 
         try {
             morningWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.MORNING, merchant.getId(),
-                    Helper.getToday(request.getDate()));
+                    Helper.getLocalDateTime(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }
 
         try {
             afternoonWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.AFTERNOON, merchant.getId(),
-                    Helper.getToday(request.getDate()));
+                    Helper.getLocalDateTime(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }
 
         try {
             eveningWorkingHour = workingHourService.getWorkingHourForSave(TimePeriod.EVENING, merchant.getId(),
-                    Helper.getToday(request.getDate()));
+                    Helper.getLocalDateTime(request.getDate()));
         } catch (WorkingHourNotFoundException e) {
             //
         }

@@ -15,6 +15,7 @@ public class AppointmentDto {
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private Boolean appointee = false;
+    private UUID appointeeId;
 
     public AppointmentDto(Appointment appointment) {
         this.id=appointment.getId();
@@ -22,6 +23,7 @@ public class AppointmentDto {
         this.finishTime = appointment.getFinishTime();
         if (Objects.nonNull(appointment.getAppointee())) {
             this.appointee = true;
+            this.appointeeId=appointment.getAppointee().getId();
         }
     }
 }

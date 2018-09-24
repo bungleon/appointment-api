@@ -19,6 +19,6 @@ public class District extends BaseEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "province_id", nullable = false)
-    private Province province;
+    @JoinColumn(name = "town_id", nullable = false)
+    private Town town;
 }

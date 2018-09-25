@@ -17,9 +17,9 @@ public class Address extends BaseEntity {
 
     private String completeAddress;
 
-    private Integer zipCode;
+    private String zipCode;
 
     @ManyToOne
-    @JoinColumn(name = "district_id", nullable = false)
+    @JoinColumn(name = "district_id")
     private District district;
 }

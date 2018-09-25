@@ -17,6 +17,6 @@ public class Town extends BaseEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "province_id", nullable = false)
+    @JoinColumn(name = "province_id")
     private Province province;
 }

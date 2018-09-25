@@ -4,5 +4,8 @@ import com.appointment.api.domain.address.Country;
 
 public interface CountryService {
     Country add(Country country);
+
+    Country getCountryByBinaryCode(String binaryCode);
+
     Boolean control();
 }

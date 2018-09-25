@@ -18,6 +18,7 @@ public enum ResponseCode {
     APPOINTMENT_TAKEN_BEFORE(311, "Appointment taken before"),
     FEED_BACK_CANNOT_CREATED(312, "Feed back cannot created"),
     FEED_BACK_NOT_FOUND(313, "Feed back not found"),
+    COUNTRY_NOT_FOUND(314,"Country not found"),
 
     INVALID_IP(991, "Invalid ip"),
     ACCESS_DENIED(992, "Access denied"),

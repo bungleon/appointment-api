@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,8 +15,10 @@ import javax.persistence.Table;
 public class Province extends BaseEntity {
     private String name;
     private String code;
+    @Column(name = "phone_code")
+    private String phoneCode;
 
     @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
+    @JoinColumn(name = "country_id")
     private Country country;
 }

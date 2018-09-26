@@ -16,4 +16,9 @@ public class TownServiceImpl implements TownService {
     public Town add(Town town) {
         return townRepository.save(town);
     }
+
+    @Override
+    public Town getByNameAndProvinceCode(String name, String provinceCode) {
+        return townRepository.getByNameAndProvinceCode(name, provinceCode);
+    }
 }

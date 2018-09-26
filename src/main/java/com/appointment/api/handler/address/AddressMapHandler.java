@@ -50,7 +50,9 @@ public class AddressMapHandler implements Handler<String, String> {
 
         // TODO yarın test et
         setOthers(trProvinceList, trTownListString, trDistrictListString, trAddressListString);
-
+        /*deleteTownRecords(trTownListString);
+        deleteDistrictRecords(trDistrictListString);
+        deleteAdressesRecords(trAddressListString);*/
         return request;
     }
 
@@ -115,25 +117,28 @@ public class AddressMapHandler implements Handler<String, String> {
     private void setOthers(List<Province> provinceList, List<String[]> towns, List<String[]> districts, List<String[]> addresses) {
         for (Province p : provinceList) {
             // Get Towns
-            List<String[]> uniqueTowns = getAdresses(towns, p.getCode());
+            List<String[]> uniqueTowns = getAddresses(towns, p.getCode());
             for (String[] t : uniqueTowns) {
                 Town town = new Town();
                 town.setName(t[2]);
+                town.setCode(t[0]);
                 town.setProvince(p);
                 Town savedTown = townService.add(town);
                 // Get Districts
-                List<String[]> uniqueDistricts = getAdresses(districts, t[0]);
+                List<String[]> uniqueDistricts = getAddresses(districts, t[0]);
                 for (String[] d : uniqueDistricts) {
                     District district = new District();
                     district.setName(d[2]);
+                    district.setCode(d[0]);
                     district.setTown(savedTown);
                     District savedDistrict = districtService.add(district);
                     // Get Address
-                    List<String[]> uniqueAddress = getAdresses(addresses, d[0]);
+                    List<String[]> uniqueAddress = getAddresses(addresses, d[0]);
                     for (String[] a : uniqueAddress) {
                         Address address = new Address();
                         address.setDistrict(savedDistrict);
                         address.setNeighborhood(a[2]);
+                        address.setCode(a[0]);
                         address.setZipCode(a[3]);
                         addressService.add(address);
                     }
@@ -142,7 +147,7 @@ public class AddressMapHandler implements Handler<String, String> {
         }
     }
 
-    private List<String[]> getAdresses(List<String[]> town, String key) {
+    private List<String[]> getAddresses(List<String[]> town, String key) {
         List<String[]> ret = new LinkedList<>();
         for (String[] t : town) {
             if (t[1].equals(key)) {
@@ -152,6 +157,39 @@ public class AddressMapHandler implements Handler<String, String> {
         return ret;
     }
 
-    private void deleteRecords(List<Province> provinceList, List<String[]> towns, List<String[]> districts, List<String[]> addresses){
+    private void deleteAdressesRecords(List<String[]> addresses) {
+        List<String[]> addresses2=new LinkedList<>();
+            addresses2.addAll(addresses);
+        for (String[] s : addresses) {
+            if (addressService.getByNameAndZipCode(s[2], s[3]) != null) {
+                addresses2.remove(s);
+            }
+        }
+
+        System.out.println(addresses2.size());
+    }
+
+    private void deleteDistrictRecords(List<String[]> districts) {
+        List<String[]> districts2=new LinkedList<>();
+        districts2.addAll(districts);
+        for (String[] s : districts) {
+            if (addressService.getByNameAndZipCode(s[2], s[3]) != null) {
+                districts2.remove(s);
+            }
+        }
+
+        System.out.println(districts2.size());
+    }
+
+    private void deleteTownRecords(List<String[]> towns) {
+        List<String[]> towns2=new LinkedList<>();
+        towns2.addAll(towns);
+        for (String[] s : towns) {
+            if (townService.getByNameAndProvinceCode(s[2], s[1]) != null) {
+                towns2.remove(s);
+            }
+        }
+
+        System.out.println(towns2.size());
     }
 }

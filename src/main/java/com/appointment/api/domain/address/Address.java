@@ -15,8 +15,9 @@ import javax.persistence.*;
 public class Address extends BaseEntity {
     private String neighborhood;
 
-    private String completeAddress;
+    private String code;
 
+    @Column(name = "zip_code")
     private String zipCode;
 
     @ManyToOne

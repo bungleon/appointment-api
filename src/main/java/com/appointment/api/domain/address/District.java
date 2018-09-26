@@ -18,6 +18,8 @@ import javax.persistence.Table;
 public class District extends BaseEntity {
     private String name;
 
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "town_id")
     private Town town;

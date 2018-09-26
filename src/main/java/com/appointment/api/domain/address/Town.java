@@ -16,6 +16,8 @@ public class Town extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "province_id")
     private Province province;

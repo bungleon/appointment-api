@@ -10,10 +10,12 @@ import java.util.UUID;
 @Setter
 public class AddressDto {
     private UUID id;
-    private String address;
+    private String neighborhood;
+    private String zipCode;
 
     public AddressDto(Address address) {
         this.id = address.getId();
-        this.address = address.getNeighborhood();
+        this.neighborhood = address.getNeighborhood();
+        this.zipCode=address.getZipCode();
     }
 }

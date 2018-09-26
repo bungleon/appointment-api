@@ -17,7 +17,7 @@ public class AddressController {
         this.addressListHandler = addressListHandler;
     }
 
-    @PostMapping("/address-list")
+    @PostMapping("/list")
     public AddressListResponse getAddressList(@RequestBody AddressListRequest request) {
         return addressListHandler.execute(request);
     }

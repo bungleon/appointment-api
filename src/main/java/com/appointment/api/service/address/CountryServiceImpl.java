@@ -4,8 +4,8 @@ import com.appointment.api.domain.address.Country;
 import com.appointment.api.domain.address.CountryRepository;
 import com.appointment.api.exception.domain_exception.CountryNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +28,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Boolean control() {
-        return CollectionUtils.isEmpty(countryRepository.findAll());
+    public List<Country> getCountryList() {
+        return countryRepository.findAllByDeletedFalse();
     }
 }

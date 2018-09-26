@@ -37,7 +37,7 @@ public class AddressMapHandler implements Handler<String, String> {
     }
 
     @Override
-    public String execute(String request) throws IOException {
+    public String execute(String request) {
         //List<String[]> countryListString = getList(COUNTRIES);
         List<String[]> trProvinceListString = getList(TR_PROVINCE);
         List<String[]> trTownListString = getList(TR_TOWN);

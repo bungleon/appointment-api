@@ -1,6 +1,6 @@
 package com.appointment.api.message.dto;
 
-import com.appointment.api.domain.address.Town;
+import com.appointment.api.domain.town.Town;
 import lombok.Getter;
 import lombok.Setter;
 

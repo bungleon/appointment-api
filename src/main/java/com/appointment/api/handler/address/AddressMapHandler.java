@@ -1,15 +1,22 @@
 package com.appointment.api.handler.address;
 
 import com.appointment.api.domain.address.*;
+import com.appointment.api.domain.country.Country;
+import com.appointment.api.domain.district.District;
+import com.appointment.api.domain.province.Province;
+import com.appointment.api.domain.town.Town;
 import com.appointment.api.handler.Handler;
 import com.appointment.api.service.address.*;
+import com.appointment.api.service.country.CountryService;
+import com.appointment.api.service.district.DistrictService;
+import com.appointment.api.service.province.ProvinceService;
+import com.appointment.api.service.town.TownService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 

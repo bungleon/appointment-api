@@ -1,6 +1,7 @@
 package com.appointment.api.domain.address;
 
 import com.appointment.api.domain.BaseEntity;
+import com.appointment.api.domain.district.District;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

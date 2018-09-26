@@ -22,12 +22,17 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
+    public Province getById(UUID id) {
+        return provinceRepository.findByIdAndDeletedFalse(id);
+    }
+
+    @Override
     public List<Province> getByCountry(Country country) {
         return provinceRepository.findAllByCountry(country);
     }
 
     @Override
     public List<Province> getByCountryId(UUID countryId) {
-        return provinceRepository.findAllByDeletedFalseAndCountryIdOrderByCodeAsc(countryId);
+        return provinceRepository.findAllByDeletedFalseAndCountryId(countryId);
     }
 }

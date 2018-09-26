@@ -8,6 +8,7 @@ import com.appointment.api.message.response.province.ProvinceListResponse;
 import com.appointment.api.service.province.ProvinceService;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class ProvinceListHandler implements Handler<ProvinceListRequest, Provinc
     public ProvinceListResponse execute(ProvinceListRequest request) {
         List<ProvinceDto> provinceDtoList = provinceService.getByCountryId(request.getCountryId()).stream()
                 .map(ProvinceDto::new)
+                .sorted(Comparator.comparing(x -> Integer.valueOf(x.getPlateNumber())))
                 .collect(Collectors.toList());
 
         return ProvinceListResponse.builder()

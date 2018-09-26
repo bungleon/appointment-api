@@ -17,7 +17,7 @@ public class CountryController {
         this.countryListHandler = countryListHandler;
     }
 
-    @PostMapping("/country-list")
+    @PostMapping("/list")
     public CountryListResponse getCountryList(@RequestBody CountryListRequest request) {
         return countryListHandler.execute(request);
     }

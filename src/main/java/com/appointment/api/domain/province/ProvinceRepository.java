@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface ProvinceRepository extends JpaRepository<Province,UUID> {
     List<Province> findAllByCountry(Country country);
-    List<Province> findAllByDeletedFalseAndCountryIdOrderByCodeAsc(UUID countryId);
+    List<Province> findAllByDeletedFalseAndCountryId(UUID countryId);
+    Province findByIdAndDeletedFalse(UUID id);
 }

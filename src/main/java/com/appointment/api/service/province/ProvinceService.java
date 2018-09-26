@@ -9,7 +9,10 @@ import java.util.UUID;
 public interface ProvinceService {
     Province add(Province province);
 
+    Province getById(UUID id);
+
     List<Province> getByCountry(Country country);
 
     List<Province> getByCountryId(UUID countryId);
+
 }

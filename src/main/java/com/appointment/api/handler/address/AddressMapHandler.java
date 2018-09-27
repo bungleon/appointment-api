@@ -1,12 +1,10 @@
 package com.appointment.api.handler.address;
 
-import com.appointment.api.domain.address.*;
 import com.appointment.api.domain.country.Country;
-import com.appointment.api.domain.district.District;
 import com.appointment.api.domain.province.Province;
 import com.appointment.api.domain.town.Town;
 import com.appointment.api.handler.Handler;
-import com.appointment.api.service.address.*;
+import com.appointment.api.service.address.AddressService;
 import com.appointment.api.service.country.CountryService;
 import com.appointment.api.service.district.DistrictService;
 import com.appointment.api.service.province.ProvinceService;
@@ -28,11 +26,11 @@ public class AddressMapHandler implements Handler<String, String> {
     private final DistrictService districtService;
     private final AddressService addressService;
 
-    private static final String COUNTRIES = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/country.txt";
-    private static final String TR_PROVINCE = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/province.txt";
-    private static final String TR_TOWN = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/town.txt";
-    private static final String TR_DISTRICT = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/district.txt";
-    private static final String TR_ADDRESS = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/address.txt";
+    //private static final String COUNTRIES = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/country.txt";
+    private static final String TR_PROVINCE = "/Users/erman/Desktop/province.txt";
+    private static final String TR_TOWN = "/Users/erman/Desktop/district.txt";
+    //private static final String TR_DISTRICT = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/district.txt";
+    //private static final String TR_ADDRESS = "/Users/erman/Desktop/Countries_MySQL_SchemaAndData_20180112/address.txt";
 
     public AddressMapHandler(CountryService countryService, ProvinceService provinceService, TownService townService,
                              DistrictService districtService, AddressService addressService) {
@@ -48,15 +46,13 @@ public class AddressMapHandler implements Handler<String, String> {
         //List<String[]> countryListString = getList(COUNTRIES);
         List<String[]> trProvinceListString = getList(TR_PROVINCE);
         List<String[]> trTownListString = getList(TR_TOWN);
-        List<String[]> trDistrictListString = getList(TR_DISTRICT);
-        List<String[]> trAddressListString = getList(TR_ADDRESS);
 
         // List<Country> countryList = setCountry(countryListString);
-        List<Province> trProvinceList = setTrProvince(trProvinceListString);
+        List<Province> trProvinceList = setAfProvince(trProvinceListString);
 
 
         // TODO yarın test et
-        setOthers(trProvinceList, trTownListString, trDistrictListString, trAddressListString);
+        //setOthers(trProvinceList, trTownListString);
         /*deleteTownRecords(trTownListString);
         deleteDistrictRecords(trDistrictListString);
         deleteAdressesRecords(trAddressListString);*/
@@ -80,18 +76,21 @@ public class AddressMapHandler implements Handler<String, String> {
         return countryList;
     }*/
 
-    private List<Province> setTrProvince(List<String[]> trProvinceListString) {
-        Country country = countryService.getCountryByBinaryCode("TR");
+    private List<Province> setAfProvince(List<String[]> trProvinceListString) {
+        Country country = countryService.getCountryByBinaryCode("AF");
         if (!CollectionUtils.isEmpty(provinceService.getByCountry(country))) {
             return provinceService.getByCountry(country);
         }
         List<Province> provinceList = new LinkedList<>();
         for (String[] s : trProvinceListString) {
             Province province = new Province();
-            province.setCode(s[1]);
+            province.setCode(s[2]);
             province.setCountry(country);
-            province.setName(s[0]);
-            province.setPhoneCode(s[2]);
+            province.setName(s[3]);
+            //province.setPhoneCode(s[2]);
+            province.setOriginalName(s[4]);
+            province.setLatitude(s[0]);
+            province.setLongitude(s[1]);
             provinceList.add(provinceService.add(province));
         }
         return provinceList;
@@ -121,35 +120,19 @@ public class AddressMapHandler implements Handler<String, String> {
         return list;
     }
 
-    private void setOthers(List<Province> provinceList, List<String[]> towns, List<String[]> districts, List<String[]> addresses) {
+    private void setOthers(List<Province> provinceList, List<String[]> towns) {
         for (Province p : provinceList) {
             // Get Towns
             List<String[]> uniqueTowns = getAddresses(towns, p.getCode());
             for (String[] t : uniqueTowns) {
                 Town town = new Town();
-                town.setName(t[2]);
-                town.setCode(t[0]);
+                town.setName(t[3]);
+                town.setOriginalName(t[5]);
+                town.setCode(t[7]);
                 town.setProvince(p);
-                Town savedTown = townService.add(town);
-                // Get Districts
-                List<String[]> uniqueDistricts = getAddresses(districts, t[0]);
-                for (String[] d : uniqueDistricts) {
-                    District district = new District();
-                    district.setName(d[2]);
-                    district.setCode(d[0]);
-                    district.setTown(savedTown);
-                    District savedDistrict = districtService.add(district);
-                    // Get Address
-                    List<String[]> uniqueAddress = getAddresses(addresses, d[0]);
-                    for (String[] a : uniqueAddress) {
-                        Address address = new Address();
-                        address.setDistrict(savedDistrict);
-                        address.setNeighborhood(a[2]);
-                        address.setCode(a[0]);
-                        address.setZipCode(a[3]);
-                        addressService.add(address);
-                    }
-                }
+                town.setLatitude(t[1]);
+                town.setLongitude(t[0]);
+                townService.add(town);
             }
         }
     }
@@ -157,7 +140,7 @@ public class AddressMapHandler implements Handler<String, String> {
     private List<String[]> getAddresses(List<String[]> town, String key) {
         List<String[]> ret = new LinkedList<>();
         for (String[] t : town) {
-            if (t[1].equals(key)) {
+            if (t[8].equals(key)) {
                 ret.add(t);
             }
         }
@@ -165,8 +148,8 @@ public class AddressMapHandler implements Handler<String, String> {
     }
 
     private void deleteAdressesRecords(List<String[]> addresses) {
-        List<String[]> addresses2=new LinkedList<>();
-            addresses2.addAll(addresses);
+        List<String[]> addresses2 = new LinkedList<>();
+        addresses2.addAll(addresses);
         for (String[] s : addresses) {
             if (addressService.getByNameAndZipCode(s[2], s[3]) != null) {
                 addresses2.remove(s);
@@ -177,7 +160,7 @@ public class AddressMapHandler implements Handler<String, String> {
     }
 
     private void deleteDistrictRecords(List<String[]> districts) {
-        List<String[]> districts2=new LinkedList<>();
+        List<String[]> districts2 = new LinkedList<>();
         districts2.addAll(districts);
         for (String[] s : districts) {
             if (addressService.getByNameAndZipCode(s[2], s[3]) != null) {
@@ -189,7 +172,7 @@ public class AddressMapHandler implements Handler<String, String> {
     }
 
     private void deleteTownRecords(List<String[]> towns) {
-        List<String[]> towns2=new LinkedList<>();
+        List<String[]> towns2 = new LinkedList<>();
         towns2.addAll(towns);
         for (String[] s : towns) {
             if (townService.getByNameAndProvinceCode(s[2], s[1]) != null) {

@@ -23,10 +23,17 @@ import javax.persistence.Table;
 public class Country extends BaseEntity {
     @Column(name = "name")
     private String name;
+
     @Column(name = "binary_code")
     private String binaryCode;
+
     @Column(name = "triple_code")
     private String tripleCode;
+
     @Column(name = "phone_code")
     private String phoneCode;
+
+    private String latitude;
+
+    private String longitude;
 }

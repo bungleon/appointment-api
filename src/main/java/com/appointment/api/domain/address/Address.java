@@ -21,6 +21,13 @@ public class Address extends BaseEntity {
     @Column(name = "zip_code")
     private String zipCode;
 
+    @Column(name = "original_name")
+    private String originalName;
+
+    private String latitude;
+
+    private String longitude;
+
     @ManyToOne
     @JoinColumn(name = "district_id")
     private District district;

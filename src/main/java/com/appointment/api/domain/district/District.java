@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -19,7 +16,14 @@ import javax.persistence.Table;
 public class District extends BaseEntity {
     private String name;
 
+    @Column(name = "original_name")
+    private String originalName;
+
     private String code;
+
+    private String latitude;
+
+    private String longitude;
 
     @ManyToOne
     @JoinColumn(name = "town_id")
